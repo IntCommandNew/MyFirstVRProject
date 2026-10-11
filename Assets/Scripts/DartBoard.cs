@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -36,6 +37,7 @@ public class DartBoard : MonoBehaviour
             Vector3 extents = meshFilter.sharedMesh.bounds.extents;
             Vector3 normal = faceNormalLocal.normalized;
             float radius = 0f;
+
             for (int axis = 0; axis < 3; axis++)
                 if (Mathf.Abs(normal[axis]) < 0.5f)
                     radius = Mathf.Max(radius, extents[axis]);
@@ -47,7 +49,12 @@ public class DartBoard : MonoBehaviour
     public int GetScore(Vector3 worldPoint, out float distanceFromCenter)
     {
         Vector3 local = transform.InverseTransformPoint(worldPoint);
-        Vector3 onFace = Vector3.ProjectOnPlane(local, faceNormalLocal.normalized);
+
+        Vector3 onFace = Vector3.ProjectOnPlane(
+            local,
+            faceNormalLocal.normalized
+        );
+
         float normalized = onFace.magnitude / LocalRadius;
 
         distanceFromCenter = (transform.TransformPoint(onFace) - transform.position).magnitude;
@@ -65,7 +72,51 @@ public class DartBoard : MonoBehaviour
     public void RegisterHit(DartFlight dart, Vector3 worldPoint)
     {
         int score = GetScore(worldPoint, out float distance);
+
+        PlayHitEffects();
+
         onDartHit?.Invoke(score);
+    }
+
+    private void PlayHitEffects()
+    {
+        ParticleSystem[] effects =
+            GetComponentsInChildren<ParticleSystem>(true);
+
+        if (effects.Length == 0)
+            return;
+
+        List<Transform> effectObjects = new List<Transform>();
+
+        foreach (ParticleSystem effect in effects)
+        {
+            Transform child = effect.transform;
+
+            while (child.parent != transform && child.parent != null)
+                child = child.parent;
+
+            if (child.parent == transform && !effectObjects.Contains(child))
+                effectObjects.Add(child);
+        }
+
+        if (effectObjects.Count == 0)
+            return;
+
+        Transform selectedEffect =
+            effectObjects[Random.Range(0, effectObjects.Count)];
+
+        ParticleSystem[] selectedSystems =
+            selectedEffect.GetComponentsInChildren<ParticleSystem>(true);
+
+        foreach (ParticleSystem particleSystem in selectedSystems)
+        {
+            particleSystem.Stop(
+                true,
+                ParticleSystemStopBehavior.StopEmittingAndClear
+            );
+
+            particleSystem.Play(true);
+        }
     }
 }
 

@@ -43,9 +43,18 @@ public class ScoreManager : MonoBehaviour
 
     public void ResetGame()
     {
+        ResetScore();
+        ResetDarts();
+    }
+
+    public void ResetScore()
+    {
         TotalScore = 0;
         UpdateText();
+    }
 
+    public void ResetDarts()
+    {
         foreach (DartFlight dart in darts)
             if (dart != null)
                 dart.ResetToStart();
@@ -54,6 +63,6 @@ public class ScoreManager : MonoBehaviour
     private void UpdateText()
     {
         if (scoreText != null)
-            scoreText.text = $"Score: {TotalScore}";
+            scoreText.text = $"{TotalScore}";
     }
 }
