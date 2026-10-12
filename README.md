@@ -4,7 +4,7 @@ A small VR darts game built with **Unity**, **OpenXR** and the **XR Interaction 
 
 The menu can be opened using the secondary action button of the left controller (for the XR Device Simulator, the button is mapped to [Shift + 2])
 
-Link to demo video: _add link here_
+Link to demo video: https://www.youtube.com/watch?v=yamxD-bvmUE
 
 ## AI-generated content
 
