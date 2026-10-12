@@ -1,4 +1,4 @@
-# MySecondARProject!
+# MyFirstVRProject!
 
 A small VR darts game built with **Unity**, **OpenXR** and the **XR Interaction Toolkit**.
 
