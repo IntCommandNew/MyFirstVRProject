@@ -1,5 +1,13 @@
 # MyFirstVRProject!
 
+# Lab 3 content
+
+Note on the robot hand blender file: Since we suck at blender, the inferior shell and screws ended up having too many vertexes and faces, so we used a "Decimate" modifier, which is why it looks weird in edit mode.
+
+Link to demo video: https://www.youtube.com/watch?v=pUX9cRRPXdM
+
+# Lab 2 content
+
 A small VR darts game built with **Unity**, **OpenXR** and the **XR Interaction Toolkit**.
 
 The menu can be opened using the secondary action button of the left controller (for the XR Device Simulator, the button is mapped to [Shift + 2])
